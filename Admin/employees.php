@@ -169,39 +169,39 @@ if (isset($_POST['notadmin'])) {
                                         <th>Salary</th>
                                         <?php if ($my['admin'] == 1){ ?><th>Admin</th> <?php } ?>
                                         <th>Edit</th>
-                                        <th>Block</th>
-                                        <th>Delete</th>
+                                        <?php if ($my['admin'] == 1){ ?><th>Block</th><?php } ?>
+                                        <?php if ($my['admin'] == 1){ ?> <th>Delete</th><?php } ?>
                                     </tr>
                                     </thead>
                                     <?php if ($my['admin'] == 1){ ?>
-                                    <tbody>
-                                    <?php while ($employee = mysqli_fetch_array($employeetap)) {
-                                    if ($employee['deleted'] == 0) {?>
-                                        <tr style="cursor: pointer;">
-                                            <td><?= $employee['id'] ?></td>
-                                            <td><?= $employee['name'] ?></td>
-                                            <td><?= $employee['surname'] ?></td>
-                                            <td><?= $employee['age'] ?></td>
-                                            <td><?= $employee['email'] ?></td>
-                                            <td><?= $employee['password'] ?></td>
-                                            <td><?php if ($employee['position'] == 1) {echo "Ceo";} elseif ($employee['position'] == 2) {echo "Menecer";} elseif ($employee['position'] == 3) {echo "Employee";} ?></td>
-                                            <td><?= $employee['salary'] ?></td>
-                                            <form method="post">
-                                                <input type="hidden" name="chooseadmin" value="<?= $employee['id']; ?>">
-                                                <?php if ($employee['admin'] == 0) { ?><td><button type="submit" name="yesadmin" class="btn btn-dark">Active Admin</button></td>
-                                                <?php } else { ?><td><button type="submit" name="notadmin" class="btn btn-info">Deactive Admin</button></td><?php } ?>
-                                            </form>
-                                            <td><a onclick="location.href = 'employeeEdit.php?id=<?= $employee['id']; ?>'" class="btn btn-success">Edit</a></td>
-                                            <form action="" method="post">
-                                                <input type="hidden" name="empblock" value="<?= $employee['id']; ?>">
-                                                <?php if ($employee['block'] == 0) { ?>
-                                                    <td><button type="submit" name="employeeblock" class="btn btn-warning">Block</button></td>
-                                                <?php } else { ?><td><button type="submit" name="employeeunblock" class="btn btn-info">Unblock</button></td><?php } ?>
-                                                    <td><button name="delete" class="btn btn-danger">Delete</button></td>
-                                            </form>
-                                        </tr>
-                                    <?php } } ?>
-                                    </tbody>
+                                        <tbody>
+                                        <?php while ($employee = mysqli_fetch_array($employeetap)) {
+                                            if ($employee['deleted'] == 0) {?>
+                                                <tr style="cursor: pointer;">
+                                                    <td><?= $employee['id'] ?></td>
+                                                    <td><?= $employee['name'] ?></td>
+                                                    <td><?= $employee['surname'] ?></td>
+                                                    <td><?= $employee['age'] ?></td>
+                                                    <td><?= $employee['email'] ?></td>
+                                                    <td><?= $employee['password'] ?></td>
+                                                    <td><?php if ($employee['position'] == 1) {echo "Ceo";} elseif ($employee['position'] == 2) {echo "Menecer";} elseif ($employee['position'] == 3) {echo "Employee";} ?></td>
+                                                    <td><?= $employee['salary'] ?></td>
+                                                    <form method="post">
+                                                        <input type="hidden" name="chooseadmin" value="<?= $employee['id']; ?>">
+                                                        <?php if ($employee['admin'] == 0) { ?><td><button type="submit" name="yesadmin" class="btn btn-dark">Active Admin</button></td>
+                                                        <?php } else { ?><td><button type="submit" name="notadmin" class="btn btn-info">Deactive Admin</button></td><?php } ?>
+                                                    </form>
+                                                    <td><a onclick="location.href = 'employeeEdit.php?id=<?= $employee['id']; ?>'" class="btn btn-success">Edit</a></td>
+                                                    <form action="" method="post">
+                                                        <input type="hidden" name="empblock" value="<?= $employee['id']; ?>">
+                                                        <?php if ($employee['block'] == 0) { ?>
+                                                            <td><button type="submit" name="employeeblock" class="btn btn-warning">Block</button></td>
+                                                        <?php } else { ?><td><button type="submit" name="employeeunblock" class="btn btn-info">Unblock</button></td><?php } ?>
+                                                        <td><button name="delete" class="btn btn-danger">Delete</button></td>
+                                                    </form>
+                                                </tr>
+                                            <?php } } ?>
+                                        </tbody>
                                     <?php }else{ ?>
                                         <tbody>
                                         <?php while ($employee = mysqli_fetch_array($employeetap)) {
@@ -216,13 +216,6 @@ if (isset($_POST['notadmin'])) {
                                                     <td><?php if ($employee['position'] == 1) {echo "Ceo";} elseif ($employee['position'] == 2) {echo "Menecer";} elseif ($employee['position'] == 3) {echo "Employee";} ?></td>
                                                     <td><?= $employee['salary'] ?></td>
                                                     <td><a onclick="location.href = 'employeeEdit.php?id=<?= $employee['id']; ?>'" class="btn btn-success">Edit</a></td>
-                                                    <form action="" method="post">
-                                                        <input type="hidden" name="empblock" value="<?= $employee['id']; ?>">
-                                                        <?php if ($employee['block'] == 0) { ?>
-                                                            <td><button type="submit" name="employeeblock" class="btn btn-warning">Block</button></td>
-                                                        <?php } else { ?><td><button type="submit" name="employeeunblock" class="btn btn-info">Unblock</button></td><?php } ?>
-                                                        <td><button name="delete" class="btn btn-danger">Delete</button></td>
-                                                    </form>
                                                 </tr>
                                             <?php } } ?>
                                         </tbody>
