@@ -8,7 +8,7 @@ if(isset($_SESSION['employeelogin']) == true){
 }else{
     header("Location: ../index.php");
 }
-if ($my['position'] == 4 or $my['position'] == 5){
+if ($my['position'] == 3){
     header("Location: ../index.php");
 }
 ?>
