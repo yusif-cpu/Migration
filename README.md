@@ -1,0 +1,1 @@
+migrationpro.sql proyektin içindədir
