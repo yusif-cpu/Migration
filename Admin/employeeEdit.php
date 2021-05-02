@@ -57,15 +57,12 @@ $employee = mysqli_fetch_array($employeetap);
                         <option id="posid">
                             <?php
                             if ($employee['position'] == 1) { echo "Ceo"; }
-                            elseif($employee['position'] == 2) { echo "Main Admin"; }
-                            elseif($employee['position'] == 3){ echo "Admin"; }
-                            elseif($employee['position'] == 4){ echo "Menecer"; }
-                            elseif($employee['position'] == 5){ echo "Employee"; }
+                            elseif($employee['position'] == 2){ echo "Menecer"; }
+                            elseif($employee['position'] == 3){ echo "Employee"; }
                             ?>
                         </option>
                         <?php foreach ($position_name as $positionname){ ?>
                             <option value="<?= $positionname['id'] ?>">
-
                                 <?= $positionname['position_name']; ?></option>
                         <?php } ?>
                     </select>
