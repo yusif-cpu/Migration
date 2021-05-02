@@ -16,14 +16,14 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="register.php">Register</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="login.php">Login</a></li>
-                    <?php } elseif (isset($_SESSION["employeelogin"]) and $my['position'] == 1 or $my['position'] == 2 or $my['position'] == 3) { ?>
+                    <?php } elseif (isset($_SESSION["employeelogin"]) and $my['position'] == 1 or $my['position'] == 2) { ?>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="Admin/index.php">Panel</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="Employee/index.php"><?= $myname ?></a></li>
-                    <?php } elseif (isset($_SESSION["employeelogin"]) and $my['position'] == 4 or $my['position'] == 5) { ?>
+                    <?php } elseif (isset($_SESSION["employeelogin"]) and $my['position'] == 3) { ?>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a></li>
