@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2021 at 11:39 AM
+-- Generation Time: May 02, 2021 at 03:32 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -34,6 +34,7 @@ CREATE TABLE `employees` (
   `age` int(11) NOT NULL,
   `email` varchar(180) NOT NULL,
   `password` varchar(250) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT 0,
   `position` int(11) NOT NULL,
   `salary` decimal(65,0) NOT NULL,
   `block` tinyint(1) NOT NULL DEFAULT 0,
@@ -44,9 +45,13 @@ CREATE TABLE `employees` (
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`id`, `name`, `surname`, `age`, `email`, `password`, `position`, `salary`, `block`, `deleted`) VALUES
-(1, 'Edgar ', 'İbrahimov', 26, 'edgar@gmail.com', '123', 1, '20000', 0, 0),
-(2, 'Yusif', 'İbrahimov', 21, 'feko.manutd.99@gmail.com', '1905', 2, '15000', 0, 0);
+INSERT INTO `employees` (`id`, `name`, `surname`, `age`, `email`, `password`, `admin`, `position`, `salary`, `block`, `deleted`) VALUES
+(1, 'Edgar ', 'İbrahimov', 26, 'edgar@gmail.com', '123', 1, 1, '20000', 0, 0),
+(2, 'Yusif', 'İbrahimov', 21, 'feko.manutd.99@gmail.com', '1905', 0, 2, '15000', 0, 0),
+(3, 'Anar', 'Şahbazov', 20, 'anar@gmail.com', '123', 0, 1, '100000', 0, 1),
+(4, 'ferid', 'ibrahimov', 11, 'ferid.manutd.99@gmail.com', '123', 0, 3, '5', 0, 1),
+(5, 'İnci', 'Osmanova', 20, 'inci@gmail.com', '1905', 0, 2, '15000', 0, 0),
+(6, 'Ferid', 'İbrahimov', 14, 'feko.manutd.99@gmail.comss', '123', 0, 2, '0', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -65,10 +70,8 @@ CREATE TABLE `positions` (
 
 INSERT INTO `positions` (`id`, `position_name`) VALUES
 (1, 'Ceo'),
-(2, 'Main Admin'),
-(3, 'Admin'),
-(4, 'Menecer'),
-(5, 'Employee');
+(2, 'Menecer'),
+(3, 'Employee');
 
 --
 -- Indexes for dumped tables
@@ -94,7 +97,7 @@ ALTER TABLE `positions`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `positions`
