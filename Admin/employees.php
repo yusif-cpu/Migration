@@ -3,6 +3,7 @@
 $employeetap = mysqli_query($conn, "SELECT * FROM `employees`");
 $employeesay = mysqli_num_rows($employeetap);
 ?>
+
 <?php
 if (isset($_POST['employeeblock'])) {
     $employeeid = $_POST['empblock'];
@@ -12,6 +13,7 @@ if (isset($_POST['employeeblock'])) {
     <?php
     $block = mysqli_query($conn, "UPDATE `employees` set `block` = 1 WHERE `id` = '$employeeid'");
 }
+
 if (isset($_POST['employeeunblock'])) {
     $employeeid = $_POST['empblock'];
     ?>
@@ -20,6 +22,7 @@ if (isset($_POST['employeeunblock'])) {
     <?php
     $unblock = mysqli_query($conn, "UPDATE `employees` set `block` = 0 WHERE `id` = '$employeeid'");
 }
+
 if (isset($_POST['delete'])) {
     $employeeid = $_POST['empblock'];
     ?>
@@ -28,6 +31,25 @@ if (isset($_POST['delete'])) {
     <?php
     $block = mysqli_query($conn, "UPDATE `employees` set `deleted` = 1 WHERE `id` = '$employeeid'");
 }
+
+if (isset($_POST['yesadmin'])) {
+    $adminid = $_POST['chooseadmin'];
+    ?>
+    <meta http-equiv="refresh" content="1;URL=employees.php">
+    <script>alert("Active Admin")</script>
+    <?php
+    $block = mysqli_query($conn, "UPDATE `employees` set `admin` = 1 WHERE `id` = '$adminid'");
+}
+
+if (isset($_POST['notadmin'])) {
+    $adminid = $_POST['chooseadmin'];
+    ?>
+    <meta http-equiv="refresh" content="1;URL=employees.php">
+    <script>alert("Deactive Admin")</script>
+    <?php
+    $block = mysqli_query($conn, "UPDATE `employees` set `admin` = 0 WHERE `id` = '$adminid'");
+}
+
 ?>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -48,16 +70,17 @@ if (isset($_POST['delete'])) {
                 </div>
                 <div class="info">
                     <a href="#" class="d-block"><?= $my['name'] . " " . $my['surname'] ?></a>
-                    <a href="#" class="d-block"> <?php if ($my['position'] == 1) {
-                            echo "Ceo";
-                        } elseif ($my['position'] == 2) {
-                            echo "Main Admin";
-                        } elseif ($my['position'] == 3) {
+                    <a href="#" class="d-block"> <?php
+                        if ($my['admin'] == 1){
                             echo "Admin";
-                        } elseif ($my['position'] == 4) {
-                            echo "Menecer";
-                        } elseif ($my['position'] == 5) {
-                            echo "Employee";
+                        }else {
+                            if ($my['position'] == 1) {
+                                echo "Ceo";
+                            } elseif ($my['position'] == 2) {
+                                echo "Menecer";
+                            } elseif ($my['position'] == 3) {
+                                echo "Employee";
+                            }
                         }
                         ?></a>
                     <a onclick="location.href ='../Employee/logout.php?logout'" type="submit"> <i
@@ -144,11 +167,13 @@ if (isset($_POST['delete'])) {
                                         <th>Password</th>
                                         <th>Position</th>
                                         <th>Salary</th>
+                                        <?php if ($my['admin'] == 1){ ?><th>Admin</th> <?php } ?>
                                         <th>Edit</th>
                                         <th>Block</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
+                                    <?php if ($my['admin'] == 1){ ?>
                                     <tbody>
                                     <?php while ($employee = mysqli_fetch_array($employeetap)) {
                                     if ($employee['deleted'] == 0) {?>
@@ -159,45 +184,49 @@ if (isset($_POST['delete'])) {
                                             <td><?= $employee['age'] ?></td>
                                             <td><?= $employee['email'] ?></td>
                                             <td><?= $employee['password'] ?></td>
-                                            <td><?php
-                                                if ($employee['position'] == 1) {
-                                                    echo "Ceo";
-                                                } elseif ($employee['position'] == 2) {
-                                                    echo "Main Admin";
-                                                } elseif ($employee['position'] == 3) {
-                                                    echo "Admin";
-                                                } elseif ($employee['position'] == 4) {
-                                                    echo "Menecer";
-                                                } elseif ($employee['position'] == 5) {
-                                                    echo "Employee";
-                                                }
-                                                ?>
-                                            </td>
+                                            <td><?php if ($employee['position'] == 1) {echo "Ceo";} elseif ($employee['position'] == 2) {echo "Menecer";} elseif ($employee['position'] == 3) {echo "Employee";} ?></td>
                                             <td><?= $employee['salary'] ?></td>
-                                            <td>
-                                                <a onclick="location.href = 'employeeEdit.php?id=<?= $employee['id']; ?>'"
-                                                   class="btn btn-success">Edit</a></td>
+                                            <form method="post">
+                                                <input type="hidden" name="chooseadmin" value="<?= $employee['id']; ?>">
+                                                <?php if ($employee['admin'] == 0) { ?><td><button type="submit" name="yesadmin" class="btn btn-dark">Active Admin</button></td>
+                                                <?php } else { ?><td><button type="submit" name="notadmin" class="btn btn-info">Deactive Admin</button></td><?php } ?>
+                                            </form>
+                                            <td><a onclick="location.href = 'employeeEdit.php?id=<?= $employee['id']; ?>'" class="btn btn-success">Edit</a></td>
                                             <form action="" method="post">
                                                 <input type="hidden" name="empblock" value="<?= $employee['id']; ?>">
                                                 <?php if ($employee['block'] == 0) { ?>
-                                                    <td>
-                                                        <button type="submit" name="employeeblock"
-                                                                class="btn btn-warning">Block
-                                                        </button>
-                                                    </td>
-                                                <?php } else { ?>
-                                                    <td>
-                                                        <button type="submit" name="employeeunblock"
-                                                                class="btn btn-info">Unblock
-                                                        </button>
-                                                    </td>
-                                                <?php } ?>
+                                                    <td><button type="submit" name="employeeblock" class="btn btn-warning">Block</button></td>
+                                                <?php } else { ?><td><button type="submit" name="employeeunblock" class="btn btn-info">Unblock</button></td><?php } ?>
                                                     <td><button name="delete" class="btn btn-danger">Delete</button></td>
                                             </form>
                                         </tr>
-                                    <?php }else{ ?>
                                     <?php } } ?>
                                     </tbody>
+                                    <?php }else{ ?>
+                                        <tbody>
+                                        <?php while ($employee = mysqli_fetch_array($employeetap)) {
+                                            if ($employee['deleted'] == 0) {?>
+                                                <tr style="cursor: pointer;">
+                                                    <td><?= $employee['id'] ?></td>
+                                                    <td><?= $employee['name'] ?></td>
+                                                    <td><?= $employee['surname'] ?></td>
+                                                    <td><?= $employee['age'] ?></td>
+                                                    <td><?= $employee['email'] ?></td>
+                                                    <td><?= $employee['password'] ?></td>
+                                                    <td><?php if ($employee['position'] == 1) {echo "Ceo";} elseif ($employee['position'] == 2) {echo "Menecer";} elseif ($employee['position'] == 3) {echo "Employee";} ?></td>
+                                                    <td><?= $employee['salary'] ?></td>
+                                                    <td><a onclick="location.href = 'employeeEdit.php?id=<?= $employee['id']; ?>'" class="btn btn-success">Edit</a></td>
+                                                    <form action="" method="post">
+                                                        <input type="hidden" name="empblock" value="<?= $employee['id']; ?>">
+                                                        <?php if ($employee['block'] == 0) { ?>
+                                                            <td><button type="submit" name="employeeblock" class="btn btn-warning">Block</button></td>
+                                                        <?php } else { ?><td><button type="submit" name="employeeunblock" class="btn btn-info">Unblock</button></td><?php } ?>
+                                                        <td><button name="delete" class="btn btn-danger">Delete</button></td>
+                                                    </form>
+                                                </tr>
+                                            <?php } } ?>
+                                        </tbody>
+                                    <?php } ?>
                                 </table>
                             </div>
                             <!-- /.card-body -->
@@ -226,26 +255,26 @@ if (isset($_POST['delete'])) {
     <!-- /.control-sidebar -->
 </div>
 <!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+<script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables  & Plugins -->
-<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="../../plugins/jszip/jszip.min.js"></script>
-<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
-<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="plugins/jszip/jszip.min.js"></script>
+<script src="plugins/pdfmake/pdfmake.min.js"></script>
+<script src="plugins/pdfmake/vfs_fonts.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+<script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../../dist/js/demo.js"></script>
+<script src="dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
     $(function () {
@@ -266,4 +295,3 @@ if (isset($_POST['delete'])) {
 </script>
 </body>
 </html>
-
