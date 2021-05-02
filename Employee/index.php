@@ -78,16 +78,17 @@ $myname = $my['name'];
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 mt-3">
                     <label for="">Position</label>
-                    <input name="position" id="position" type="text" value="<?php if ($my['position'] == 1) {
-                        echo "Ceo";
-                    } elseif ($my['position'] == 2) {
-                        echo "Main Admin";
-                    } elseif ($my['position'] == 3) {
+                    <input name="position" id="position" type="text" value="<?php
+                    if ($my['admin'] == 1){
                         echo "Admin";
-                    } elseif ($my['position'] == 4) {
-                        echo "Menecer";
-                    } elseif ($my['position'] == 5) {
-                        echo "Employee";
+                    }else {
+                        if ($my['position'] == 1) {
+                            echo "Ceo";
+                        } elseif ($my['position'] == 2) {
+                            echo "Menecer";
+                        } elseif ($my['position'] == 3) {
+                            echo "Employee";
+                        }
                     }
                     ?>" class="form-control">
                 </div>
