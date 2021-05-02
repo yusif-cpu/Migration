@@ -178,6 +178,7 @@ if (isset($_POST['notadmin'])) {
                                         <?php while ($employee = mysqli_fetch_array($employeetap)) {
                                             if ($employee['deleted'] == 0) {?>
                                                 <tr style="cursor: pointer;">
+                                                    <form method="post">
                                                     <td><?= $employee['id'] ?></td>
                                                     <td><?= $employee['name'] ?></td>
                                                     <td><?= $employee['surname'] ?></td>
@@ -186,13 +187,10 @@ if (isset($_POST['notadmin'])) {
                                                     <td><?= $employee['password'] ?></td>
                                                     <td><?php if ($employee['position'] == 1) {echo "Ceo";} elseif ($employee['position'] == 2) {echo "Menecer";} elseif ($employee['position'] == 3) {echo "Employee";} ?></td>
                                                     <td><?= $employee['salary'] ?></td>
-                                                    <form method="post">
                                                         <input type="hidden" name="chooseadmin" value="<?= $employee['id']; ?>">
                                                         <?php if ($employee['admin'] == 0) { ?><td><button type="submit" name="yesadmin" class="btn btn-dark">Active Admin</button></td>
                                                         <?php } else { ?><td><button type="submit" name="notadmin" class="btn btn-info">Deactive Admin</button></td><?php } ?>
-                                                    </form>
                                                     <td><a onclick="location.href = 'employeeEdit.php?id=<?= $employee['id']; ?>'" class="btn btn-success">Edit</a></td>
-                                                    <form action="" method="post">
                                                         <input type="hidden" name="empblock" value="<?= $employee['id']; ?>">
                                                         <?php if ($employee['block'] == 0) { ?>
                                                             <td><button type="submit" name="employeeblock" class="btn btn-warning">Block</button></td>
