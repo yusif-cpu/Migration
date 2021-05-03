@@ -13,7 +13,7 @@ if (isset($_POST['register'])){
 <?php
     }
     $registertap = mysqli_query($conn,"INSERT INTO `employees` set  `name`= '$fname', `surname`='$lname', `age` = '$age', `email`='$email', `password`='$password'");
-    header("Location: ../index.php");
+    header("Location: login.php");
 } ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +41,7 @@ if (isset($_POST['register'])){
         <div class="card-body register-card-body">
             <p class="login-box-msg">Register a new membership</p>
 
-            <form action="index.php" method="post">
+            <form method="post">
                 <div class="input-group mb-3">
                     <input type="text" name="fname" class="form-control" placeholder="Name">
                     <div class="input-group-append">
